@@ -1,7 +1,17 @@
-FROM python
+FROM gliderlabs/alpine:3.1
+MAINTAINER Ian Neubert <ian@ianneubert.com>
 
 RUN mkdir /data
-RUN pip install awscli
+RUN apk --update add \ 
+      less \
+      groff \
+      python \
+      py-pip \
+      jq \
+      curl \
+      bash && \
+      pip install --upgrade awscli s3cmd && \
+      mkdir /root/.aws
 
 ENTRYPOINT ["aws"]
 WORKDIR /data
